@@ -8,6 +8,8 @@ gem 'require_all'
 gem 'thin'
 gem 'shotgun'
 gem 'bcrypt'
+gem 'dotenv'
+gem 'sinatra-flash'
 
 group :test do
   gem 'rspec'

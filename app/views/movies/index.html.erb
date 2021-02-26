@@ -1,1 +1,8 @@
-<h1>This is the Model's index page.</h1>
+<% if flash[:success] %>
+ <div class="success flash">
+         <h4 class ="success"><%= flash[:success] %></h4>
+       </div>
+        <% end %>
+
+<h1>Movies</h1>
+

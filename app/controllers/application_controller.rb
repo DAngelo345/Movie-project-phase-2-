@@ -15,4 +15,37 @@ class ApplicationController < Sinatra::Base
     erb :welcome
   end
 
+  error Sinatra::NotFound do 
+    erb :"error.html"
+  end
+
+
+  helpers do 
+
+      def current_user
+        @current_user ||= User.find(session[:user_id]) if session[:user_id]
+      end
+
+      def logged_in?
+          !!current_user
+      end
+
+      def redirect_if_not_logged_in
+
+        if !logged_in?
+          redirect "/login"
+        end
+      end
+      
+      def not_the_owner?(obj)
+        if curerent_user != obj.user
+          flash[:error] = "You do not have permission to see that page!"
+            redirect '/movies'
+          end
+      end
+    end
+  
 end
+
+
+

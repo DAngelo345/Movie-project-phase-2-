@@ -1,1 +1,22 @@
-<h1>Insert the form to edit an instance of your model here.</h1>
+<h1>Edit a movie below</h1>
+<form action="/movies/<%=@movie.id%>" method="POST">
+    <input id="hidden" type="hidden" name="_method" value = "PATCH">
+    <label for="movies">
+    <div class= "form-group">
+    <label for="title">Title:</label>
+     <input id="title" type="text" name="movie[title]" value="<%=@movie.title%>">
+    </div>
+    <div class= "form-group">
+    <label for="genre">Genre:</label>
+     <input id="genre" type="text" name="movie[genre]" value="<%=@movie.genre%>">
+    </div>
+    <div class= "form-group">
+    <label for="length">Length:</label>
+        <input id="length" type="text" name="movie[length]" value="<%=@movie.length%>">
+    </div>
+    <div class= "form-group">
+    <label for="director">Director:</label>
+     <input id="director" type="text" name="movie[director]" value="<%=@movie.director%>">
+    </div>
+    <input type="submit" value="update">
+</form>

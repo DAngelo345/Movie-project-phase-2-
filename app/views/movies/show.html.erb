@@ -1,1 +1,16 @@
-<h1>This is the show page for an individual instance of your model.</h1>
+<h1><%= @movie.title %></h1>
+<h4> By: <%= @movie.director%> </h4>
+<br><hr>
+<h4> Genre: <%= @movie.genre%> </h4>
+<h4> Duration: <%= @movie.length %> </h4>
+<h4> Plot: <%= @movie.plot%> </h4>
+
+
+<a class="btn btn-primary btn-sm" href="/movies/<%=@movie.id%>/edit"> Edit </a>
+
+
+<form method="post" id="delete-form" action="/movies/<%=@movie.id%>">
+    <input id="hidden" type="hidden" name="_method" value="DELETE">
+    <input class="btn btn-primary btn-sm" type="submit" value="Delete">
+</form>
+

@@ -21,10 +21,18 @@ class UsersController < ApplicationController
  
   end
 
-#   # GET: /users/5
-#   get "/users/:id" do
-#     erb :"/users/show.html"
-#   end
+  # GET: /users/5
+  get "/users/:id" do
+    redirect_if_not_logged_in
+    #find user with id 
+    user = User.find_by(id: id)
+    #if current_user == user
+      if current_user == user
+        erb :"/users/show.html"
+      else
+        redirect "/users/#{current_user.id}"
+      end
+  end
 
 #   # GET: /users/5/edit
 #   get "/users/:id/edit" do

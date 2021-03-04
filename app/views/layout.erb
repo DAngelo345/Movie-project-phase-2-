@@ -25,19 +25,30 @@
       <li class="nav-item active">
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
+      <% if !logged_in? %>
       <li class="nav-item">
-        <a class="nav-link" href="#">Login</a>
+        <a class="nav-link" href="/login">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Signup</a>
+        <a class="nav-link" href="/signup">Signup</a>
       </li>
+      <% else %>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/:id">Profile</a>
+      </li>
+
+      <% end %>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
+          Resources
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/movies">Movies</a>
           <a class="dropdown-item" href="#">Favorites</a>
+          <a class="dropdown-item" href="/movies/new">Create New Movie</a>
          
         </div>
       </li>
@@ -47,6 +58,15 @@
   </div>
 </nav>
     
+<% if flash[:error] %>
+ <div class="error flash fatal">
+         <h4 class ="error"><%= flash[:error] %></h4>
+       </div>
+<% elsif  flash[:success] %>
+  <div class="success flash">
+  <h4 class ="success"><%= flash[:success] %></h4>
+</div>
+        <% end %>
 
         <%= yield %>
 

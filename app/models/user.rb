@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base #500+
 
-    
+   
     has_many :favorites
     has_many :movies, through: :favorites
     has_secure_password #password, password=, authentication, password_confrimation

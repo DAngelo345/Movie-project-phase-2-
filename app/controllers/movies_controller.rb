@@ -4,6 +4,14 @@ class MoviesController < ApplicationController
   get "/movies" do
     redirect_if_not_logged_in
     @movies = Movie.all
+    @movie = params
+
+    if params[:search]
+      @movie.where("title like ?", "%#{@movie}%")
+
+    # binding.pry
+
+    end
     erb :"/movies/index.html"
   end
 
@@ -16,9 +24,9 @@ class MoviesController < ApplicationController
   # POST: /movies
   post "/movies" do
     redirect_if_not_logged_in
-    create_movie = Movie.create(params[:movie])
-
-    if create_movie.valid?
+    create_movie = Movie.new(params[:movie])
+    create_movie.owner = current_user
+    if create_movie.save
       current_user.movies << create_movie
       flash[:success] = "Successfully created a new movie!"
     redirect "/movies"
@@ -40,7 +48,13 @@ class MoviesController < ApplicationController
     redirect_if_not_logged_in
     id = params[:id]
     @movie = Movie.find_by(id: id)
+    if current_user == @movie.owner
     erb :"/movies/edit.html"
+    else
+      flash[:error] = "wrong owner"
+      redirect "/movies/#{@movie.id}"
+    end
+
   end
 
   # PATCH: /movies/5
@@ -49,12 +63,17 @@ class MoviesController < ApplicationController
     id = params[:id]
     movie = Movie.find_by(id: id)
     attrs = params[:movie]
-    if movie.update(attrs)
-      flash[:success] = "Movie successfully updated"
-      redirect "/movies/#{movie.id}"
+    if current_user == movie.owner
+      if movie.update(attrs)
+        flash[:success] = "Movie successfully updated"
+        redirect "/movies/#{movie.id}"
+      else
+        flash[:error] = movie.errors.full_messages.first
+        redirect "/movies/#{movie.id}/edit"
+      end
     else
-      flash[:error] = movie.errors.full_messages.first
-      redirect "/movies/#{movie.id}/edit"
+      flash[:error] = "wrong owner"
+      redirect "/movies/#{movie.id}"
     end
   end
 
@@ -62,8 +81,19 @@ class MoviesController < ApplicationController
   delete "/movies/:id" do
     redirect_if_not_logged_in
     id = params[:id]
-    Movie.destroy(id)
-    redirect "/movies"
+    movie = Movie.find_by(id: id)
+    if current_user == movie.owner
+      if Movie.destroy(id)
+        flash[:success] = "Movie successfully destroyed"
+        redirect "/users/#{current_user.id}"
+      else
+        flash[:error] = movie.errors.full_messages.first
+        redirect "/movies/#{movie.id}"
+      end
+    else
+      flash[:error] = "wrong owner"
+      redirect "/movies/#{movie.id}"
+    end
   end
   get "/movies/:id/favorite" do 
     redirect_if_not_logged_in

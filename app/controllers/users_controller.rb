@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   # POST: /users
   post "/signup" do
   user = User.create(params["user"])
+  # binding.pry
     if user.valid?
       flash[:success] = "Successfully logged in!"
       session["user_id"] = user.id
@@ -18,18 +19,17 @@ class UsersController < ApplicationController
       flash[:error] = user.errors.full_messages.first
       redirect '/signup'
     end
- 
   end
 
   # GET: /users/5
   get "/users/:id" do
     redirect_if_not_logged_in
-    #find user with id 
-    user = User.find_by(id: id)
-    #if current_user == user
+  
+    user = User.find_by(id: params[:id])
       if current_user == user
         erb :"/users/show.html"
       else
+        flash[:error] = "Authorization Denied, you have been redirected to your personal page!"
         redirect "/users/#{current_user.id}"
       end
   end

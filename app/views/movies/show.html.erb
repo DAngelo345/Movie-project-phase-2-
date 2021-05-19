@@ -5,12 +5,13 @@
 <h4> Duration: <%= @movie.length %> </h4>
 <h4> Plot: <%= @movie.plot%> </h4>
 
+<% if current_user == @movie.owner%>
+    <a class="btn btn-primary btn-sm" href="/movies/<%=@movie.id%>/edit"> Edit </a>
 
-<a class="btn btn-primary btn-sm" href="/movies/<%=@movie.id%>/edit"> Edit </a>
 
-
-<form method="post" id="delete-form" action="/movies/<%=@movie.id%>">
-    <input id="hidden" type="hidden" name="_method" value="DELETE">
-    <input class="btn btn-primary btn-sm" type="submit" value="Delete">
-</form>
+    <form method="post" id="delete-form" action="/movies/<%=@movie.id%>">
+        <input id="hidden" type="hidden" name="_method" value="DELETE">
+        <input class="btn btn-primary btn-sm" type="submit" value="Delete">
+    </form>
+<%end%>
 

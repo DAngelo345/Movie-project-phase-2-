@@ -1,8 +1,4 @@
-<% if flash[:success] %>
- <div class="success flash">
-         <h4 class ="success"><%= flash[:success] %></h4>
-       </div>
-        <% end %>
+
 
 <h1>Movie Home Page</h1>
 
@@ -16,4 +12,10 @@
     <% else %>
     <p>there are currently no movies.</p>
     <% end %>
+    <form action='/movies' method='get'>
+    <input type="text" name="search" id="search" >
+
+
+    <input type="submit" value="search">
+    </form>
 

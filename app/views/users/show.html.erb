@@ -1,7 +1,7 @@
 <h1>Profile</h1>
-<% if @movies.length > 0 %>
+<% if current_user.movies.length > 0 %>
 <ul class="movies-list">
-<% @movies.each do |film| %>
+<% current_user.movies.each do |film| %>
     <li class="movie-item"> <a href="/movies/<%= film.id %>"><%= film.title %></a> <a class="btn btn-primary btn-sm" href="/movies/<%=film.id%>/favorite"> <%= current_user.like_or_unlike(film)%> </a> </li>
     <br>
     <% end %>

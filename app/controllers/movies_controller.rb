@@ -3,13 +3,11 @@ class MoviesController < ApplicationController
   # GET: /movies
   get "/movies" do
     redirect_if_not_logged_in
-    @movies = Movie.all
-    @movie = params
 
     if params[:search]
-      @movie.where("title like ?", "%#{@movie}%")
-
-    # binding.pry
+      @movies = Movie.where("title like ?", "%#{params[:search]}%")
+    else 
+      @movies = Movie.all
 
     end
     erb :"/movies/index.html"

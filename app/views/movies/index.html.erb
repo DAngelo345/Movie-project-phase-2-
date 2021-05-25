@@ -5,7 +5,7 @@
 <% if @movies.length > 0 %>
 <ul class="movies-list">
 <% @movies.each do |film| %>
-    <li class="movie-item"> <a href="/movies/<%= film.id %>"><%= film.title %></a> <a class="btn btn-primary btn-sm" href="/movies/<%=film.id%>/favorite"> <%= current_user.like_or_unlike(film)%> </a> </li>
+    <li class="movie-item"> <a href="/movies/<%= film.id %>"><%= film.title %></a>  <a class="btn btn-primary btn-sm" href="/movies/<%=film.id%>/favorite">  <%= current_user.like_or_unlike(film)%> </a> </li>
     <br>
     <% end %>
     </ul>

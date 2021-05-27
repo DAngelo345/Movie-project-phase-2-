@@ -8,6 +8,7 @@ class MoviesController < ApplicationController
       @movies = Movie.where("title like ?", "%#{params[:search]}%")
     else 
       @movies = Movie.all
+      # binding.pry
 
     end
     erb :"/movies/index.html"
